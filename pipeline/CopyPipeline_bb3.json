@@ -1,0 +1,130 @@
+{
+	"name": "CopyPipeline_bb3",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_bb3",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "input/source2/FactTransactionHistory.txt"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Azure Data Lake Storage Gen2 file"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings",
+							"skipLineCount": 0
+						}
+					},
+					"sink": {
+						"type": "SqlPoolSink",
+						"allowPolyBase": true,
+						"polyBaseSettings": {
+							"rejectValue": 0,
+							"rejectType": "value",
+							"useTypeDefault": true
+						},
+						"tableOption": "autoCreate"
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "ws-training-ade-WorkspaceDefaultStorage",
+							"type": "LinkedServiceReference"
+						},
+						"path": "staging"
+					},
+					"parallelCopies": 60,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "TransactionID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TransactionID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductKey",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProductKey",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "OrderDate",
+									"type": "String"
+								},
+								"sink": {
+									"name": "OrderDate",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Quantity",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Quantity",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "ActualCost",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ActualCost",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_bb3",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_bb3",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}

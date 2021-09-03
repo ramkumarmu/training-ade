@@ -1,0 +1,16 @@
+{
+	"name": "DestinationDataset_bb3",
+	"properties": {
+		"annotations": [],
+		"type": "SqlPoolTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Azure Data Lake Storage Gen2 file"
+		},
+		"sqlPool": {
+			"referenceName": "dwtrainingade",
+			"type": "SqlPoolReference"
+		}
+	}
+}
